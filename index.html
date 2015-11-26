@@ -6,7 +6,7 @@
 
 		<title>Interfacce alla GO? Uno sguardo a @functools.singledispach</title>
 
-		<meta name="description" content="Come implementare qualcosa di simile alle interfacce di GO in python, verificando la cross-compatibilità">
+		<meta name="description" content="Come implementare qualcosa di simile alle interfacce di GO in python">
 		<meta name="author" content="Pietro Brunetti aka gunzapper">
 
 		<meta name="apple-mobile-web-app-capable" content="yes">
@@ -85,11 +85,54 @@
                                                       -->
 					</section>
 					<section>
-						<h2>Basement Level 1</h2>
-						<p>Nested slides are useful for adding additional detail underneath a high level horizontal slide.</p>
+                                          <h2>Diamo un occhiata a GO</h2>
+                                          <p> (prenderò in prestito spesso il codice dal Go tour )</p>
+						<p><pre><code data-trim>
+
+import (
+  "fmt"
+  "math"
+)
+
+type Abser interface {
+  Abs() float64
+}
+
+func main() {
+  var a Abser
+  f := MyFloat(-math.Sqrt2)
+  v := Vertex{3, 4}
+
+  a = f  // a MyFloat implements Abser
+  a = &v // a *Vertex implements Abser
+
+  // In the following line, v is a Vertex (not *Vertex)
+  // and does NOT implement Abser.
+  a = v
+
+  fmt.Println(a.Abs())
+}
+
+type MyFloat float64
+
+func (f MyFloat) Abs() float64 {
+  if f < 0 {
+    return float64(-f)
+  }
+  return float64(f)
+}
+
+type Vertex struct {
+  X, Y float64
+}
+
+func (v *Vertex) Abs() float64 {
+  return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}Nested slides are useful for adding additional detail underneath a high level horizontal slide.def lazy-fib
+    </code></pre></p>
 					</section>
 					<section>
-						<h2>Basement Level 2</h2>
+						<h2></h2>
 						<p>That's it, time to go back up.</p>
 						<br>
 						<a href="#/2">
